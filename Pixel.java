@@ -8,7 +8,7 @@
 
 public class Pixel {
 
-    private short[] color;
+    private short[] color = new short[3];
 
 
     public Pixel(short red, short green, short blue) {
@@ -47,7 +47,7 @@ public class Pixel {
         color[2] = blue;
     }
 
-    public Pixel averagePixel(Pixel[] pixelArray, int length) {
+    public void averagePixel(Pixel[] pixelArray, int length) {
         int average = 0, counter;
         Pixel pixel = new Pixel();
         // Get red color
@@ -55,20 +55,19 @@ public class Pixel {
             average += pixelArray[counter].getRed();
         }
         average /= length;
-        pixel.setRed((short) average);
+        this.setRed((short) average);
         // Get green color
         for (counter = 0, average = 0; counter < length; counter++) {
             average += pixelArray[counter].getGreen();
         }
         average /= length;
-        pixel.setGreen((short) average);
+        this.setGreen((short) average);
         // Get blue color
         for (counter = 0, average = 0; counter < length; counter++) {
             average += pixelArray[counter].getBlue();
         }
         average /= length;
-        pixel.setBlue((short) average);
-        return pixel;
+        this.setBlue((short) average);
     }
 
 

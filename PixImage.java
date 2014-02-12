@@ -36,7 +36,12 @@ public class PixImage {
     // Your solution here.
     this.width = width;
     this.height = height;
-    this.image = new Pixel[width][height];
+    image = new Pixel[width][height];
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        image[x][y] = new Pixel();
+      }
+    }
   }
 
   /**
@@ -131,12 +136,6 @@ public class PixImage {
     str = "";
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
-        /*
-        red = imageArray[x][y].getRed();
-        str += red % 100;
-        red -= red / 100;
-        str += imageArray[x][y].getRed() % 10);
-        */
         str += "|";
         str += String.valueOf(image[x][y].getRed()) + ",";
         str += String.valueOf(image[x][y].getGreen()) + ",";
@@ -178,81 +177,98 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
-    PixImage originalImage = this;
-    short average = 0;
+    if (numIterations <= 0) return this;
+
+    PixImage originalImage = this, blurredImage = new PixImage(this.width, this.height);
     Pixel[] pixelArray = new Pixel[9];
+
     for (int counter = 0; counter < numIterations; counter++) {
-      PixImage blurredImage = new PixImage(this.width, this.height);
       
       // Corners
-      pixelArray[0] = originalImage[0][0];
-      pixelArray[1] = originalImage[0][1];
-      pixelArray[2] = originalImage[1][0];
-      pixelArray[3] = originalImage[1][1];
-      blurredImage[0][0] = averagePixel(pixelArray, 4);
-      pixelArray[0] = originalImage[width-1][0];
-      pixelArray[1] = originalImage[width-2][0];
-      pixelArray[2] = originalImage[width-1][1];
-      pixelArray[3] = originalImage[width-2][1];
-      blurredImage[width-1][0] = averagePixel(pixelArray, 4);
-      pixelArray[0] = originalImage[0][height-1];
-      pixelArray[1] = originalImage[1][height-1];
-      pixelArray[2] = originalImage[0][height-2];
-      pixelArray[3] = originalImage[1][height-2];
-      blurredImage[0][height-1] = averagePixel(pixelArray, 4);
-      pixelArray[0] = originalImage[width-1][height-1];
-      pixelArray[1] = originalImage[width-2][height-1];
-      pixelArray[2] = originalImage[width-1][height-2];
-      pixelArray[3] = originalImage[width-2][height-2];
-      blurredImage[width-1][height-1] = averagePixel(pixelArray, 4);
+      pixelArray[0] = originalImage.image[0][0];
+      pixelArray[1] = originalImage.image[0][1];
+      pixelArray[2] = originalImage.image[1][0];
+      pixelArray[3] = originalImage.image[1][1];
+      blurredImage.image[0][0].averagePixel(pixelArray, 4);
+      pixelArray[0] = originalImage.image[width-1][0];
+      pixelArray[1] = originalImage.image[width-2][0];
+      pixelArray[2] = originalImage.image[width-1][1];
+      pixelArray[3] = originalImage.image[width-2][1];
+      blurredImage.image[width-1][0].averagePixel(pixelArray, 4);
+      pixelArray[0] = originalImage.image[0][height-1];
+      pixelArray[1] = originalImage.image[1][height-1];
+      pixelArray[2] = originalImage.image[0][height-2];
+      pixelArray[3] = originalImage.image[1][height-2];
+      blurredImage.image[0][height-1].averagePixel(pixelArray, 4);
+      pixelArray[0] = originalImage.image[width-1][height-1];
+      pixelArray[1] = originalImage.image[width-2][height-1];
+      pixelArray[2] = originalImage.image[width-1][height-2];
+      pixelArray[3] = originalImage.image[width-2][height-2];
+      blurredImage.image[width-1][height-1].averagePixel(pixelArray, 4);
 
       // Top Edge
       for (int i = 1; i < (width-1); i++) {
-        pixelArray[0] = originalImage[i-1][0];
-        pixelArray[1] = originalImage[i][0];
-        pixelArray[2] = originalImage[i+1][0];
-        pixelArray[3] = originalImage[i-1][1];
-        pixelArray[4] = originalImage[i][1];
-        pixelArray[5] = originalImage[i+1][1];
-        blurred[i][0] = averagePixel(pixelArray, 6);
+        pixelArray[0] = originalImage.image[i-1][0];
+        pixelArray[1] = originalImage.image[i][0];
+        pixelArray[2] = originalImage.image[i+1][0];
+        pixelArray[3] = originalImage.image[i-1][1];
+        pixelArray[4] = originalImage.image[i][1];
+        pixelArray[5] = originalImage.image[i+1][1];
+        blurredImage.image[i][0].averagePixel(pixelArray, 6);
       }
 
       // Bottom Edge
       for (int i = 1; i < (width-1); i++) {
-        pixelArray[0] = originalImage[i-1][height-1];
-        pixelArray[1] = originalImage[i][height-1];
-        pixelArray[2] = originalImage[i+1][height-1];
-        pixelArray[3] = originalImage[i-1][height-2];
-        pixelArray[4] = originalImage[i][height-2];
-        pixelArray[5] = originalImage[i+1][height-2];
-        blurred[i][height-1] = averagePixel(pixelArray, 6);
+        pixelArray[0] = originalImage.image[i-1][height-1];
+        pixelArray[1] = originalImage.image[i][height-1];
+        pixelArray[2] = originalImage.image[i+1][height-1];
+        pixelArray[3] = originalImage.image[i-1][height-2];
+        pixelArray[4] = originalImage.image[i][height-2];
+        pixelArray[5] = originalImage.image[i+1][height-2];
+        blurredImage.image[i][height-1].averagePixel(pixelArray, 6);
       }
 
       // Left Edge
       for (int i = 1; i < (height-1); i++) {
-        pixelArray[0] = originalImage[0][i-1];
-        pixelArray[1] = originalImage[0][i];
-        pixelArray[2] = originalImage[0][i+1];
-        pixelArray[3] = originalImage[1][i-1];
-        pixelArray[4] = originalImage[1][i];
-        pixelArray[5] = originalImage[1][i+1];
-        blurred[0][i] = averagePixel(pixelArray, 6);
+        pixelArray[0] = originalImage.image[0][i-1];
+        pixelArray[1] = originalImage.image[0][i];
+        pixelArray[2] = originalImage.image[0][i+1];
+        pixelArray[3] = originalImage.image[1][i-1];
+        pixelArray[4] = originalImage.image[1][i];
+        pixelArray[5] = originalImage.image[1][i+1];
+        blurredImage.image[0][i].averagePixel(pixelArray, 6);
       }
 
       // Right Edge
       for (int i = 1; i < (height-1); i++) {
-        pixelArray[0] = originalImage[width-1][i-1];
-        pixelArray[1] = originalImage[width-1][i];
-        pixelArray[2] = originalImage[width-1][i+1];
-        pixelArray[3] = originalImage[width-2][i-1];
-        pixelArray[4] = originalImage[width-2][i];
-        pixelArray[5] = originalImage[width-2][i+1];
-        blurred[0][i] = averagePixel(pixelArray, 6);
+        pixelArray[0] = originalImage.image[width-1][i-1];
+        pixelArray[1] = originalImage.image[width-1][i];
+        pixelArray[2] = originalImage.image[width-1][i+1];
+        pixelArray[3] = originalImage.image[width-2][i-1];
+        pixelArray[4] = originalImage.image[width-2][i];
+        pixelArray[5] = originalImage.image[width-2][i+1];
+        blurredImage.image[width-1][i].averagePixel(pixelArray, 6);
       }
-    }
-        
 
-    return this;
+      // Inside
+      for (int x = 1; x < (width-1); x++) {
+        for (int y = 1; y < (height-1); y++) {
+          pixelArray[0] = originalImage.image[x-1][y-1];
+          pixelArray[1] = originalImage.image[x-1][y];
+          pixelArray[2] = originalImage.image[x-1][y+1];
+          pixelArray[3] = originalImage.image[x][y-1];
+          pixelArray[4] = originalImage.image[x][y];
+          pixelArray[5] = originalImage.image[x][y+1];
+          pixelArray[6] = originalImage.image[x+1][y-1];
+          pixelArray[7] = originalImage.image[x+1][y];
+          pixelArray[8] = originalImage.image[x+1][y+1];
+          blurredImage.image[x][y].averagePixel(pixelArray, 9);
+        }
+      }
+      originalImage = blurredImage;
+    }
+
+    return blurredImage;
   }
 
   /**
