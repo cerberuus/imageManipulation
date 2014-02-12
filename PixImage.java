@@ -44,6 +44,12 @@ public class PixImage {
     }
   }
 
+  public PixImage(PixImage original) {
+    this.width = original.width;
+    this.height = original.height;
+    this.image = original.image;
+  }
+
   /**
    * getWidth() returns the width of the image.
    *
@@ -179,7 +185,27 @@ public class PixImage {
     // Replace the following line with your solution.
     if (numIterations <= 0) return this;
 
-    PixImage originalImage = this, blurredImage = new PixImage(this.width, this.height);
+    PixImage newImage = new PixImage(this);
+    ///*
+    Matrix blurMatrix = Matrix.blurMatrix();
+    short red, green, blue;
+    int count;
+
+    for (int counter = 0; counter < numIterations; counter++) {
+      PixImage blurredImage = new PixImage(this.width, this.height); 
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+          MatrixArrayPlusCount matrixArray = MatrixArrayPlusCount.Pixel2MatrixCount0(newImage, x, y);
+          count = matrixArray.getCount();
+          red = (short) (Matrix.scalarMultiply(matrixArray.getMatrix(0), blurMatrix) / count);
+          green = (short) (Matrix.scalarMultiply(matrixArray.getMatrix(1), blurMatrix) / count);
+          blue = (short) (Matrix.scalarMultiply(matrixArray.getMatrix(2), blurMatrix) / count);
+          blurredImage.setPixel(x, y, red, green, blue);
+        }
+      }
+      newImage = blurredImage;
+    }
+    /*
     Pixel[] pixelArray = new Pixel[9];
 
     for (int counter = 0; counter < numIterations; counter++) {
@@ -266,9 +292,9 @@ public class PixImage {
         }
       }
       originalImage = blurredImage;
-    }
+    } */
 
-    return blurredImage;
+    return newImage;
   }
 
   /**
@@ -313,6 +339,11 @@ public class PixImage {
    */
   public PixImage sobelEdges() {
     // Replace the following line with your solution.
+    PixImage sobelledImage = new PixImage(width, height);
+    
+
+
+
     return this;
     // Don't forget to use the method mag2gray() above to convert energies to
     // pixel intensities.
