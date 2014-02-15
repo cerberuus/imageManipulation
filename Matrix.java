@@ -109,8 +109,9 @@ public class Matrix {
 	public static Matrix[] Pixel2MatrixReflect(PixImage object, int x, int y) {
 		Matrix[] matrixArray = new Matrix[3];
 		int posx, posy, width = object.getWidth(), height = object.getHeight();
-		// Red Component
 		matrixArray[0] = new Matrix();
+		matrixArray[1] = new Matrix();
+		matrixArray[2] = new Matrix();
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				posx = abs(x + i - 1, width);

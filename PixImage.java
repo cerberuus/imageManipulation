@@ -205,6 +205,7 @@ public class PixImage {
       }
       newImage = blurredImage;
     }
+    return newImage;
     /*
     Pixel[] pixelArray = new Pixel[9];
 
@@ -292,9 +293,9 @@ public class PixImage {
         }
       }
       originalImage = blurredImage;
-    } */
+    } 
 
-    return newImage;
+    return newImage; */
   }
 
   /**
@@ -340,11 +341,25 @@ public class PixImage {
   public PixImage sobelEdges() {
     // Replace the following line with your solution.
     PixImage sobelledImage = new PixImage(width, height);
-    
-
-
-
-    return this;
+    Matrix gradxMatrix = Matrix.gradientxMatrix();
+    Matrix gradyMatrix = Matrix.gradientyMatrix();
+    int color, gx, gy;
+    long energy;
+    short gray;
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        Matrix[] matrixArray = Matrix.Pixel2MatrixReflect(this, x, y);
+        energy = 0;
+        for (color = 0; color < 3; color++) {
+          gx = Matrix.scalarMultiply(matrixArray[color], gradxMatrix);
+          gy = Matrix.scalarMultiply(matrixArray[color], gradyMatrix);
+          energy += (gx * gx + gy * gy);
+        }
+        gray = mag2gray(energy);
+        sobelledImage.setPixel(x, y, gray, gray, gray);
+      }
+    }
+    return sobelledImage;
     // Don't forget to use the method mag2gray() above to convert energies to
     // pixel intensities.
   }
