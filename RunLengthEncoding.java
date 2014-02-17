@@ -29,9 +29,9 @@ public class RunLengthEncoding implements Iterable {
    *  Define any variables associated with a RunLengthEncoding object here.
    *  These variables MUST be private.
    */
-
-
-
+  private Dlist list;
+  private int width;
+  private int height;
 
   /**
    *  The following methods are required for Part II.
@@ -47,7 +47,9 @@ public class RunLengthEncoding implements Iterable {
    */
 
   public RunLengthEncoding(int width, int height) {
-    // Your solution here.
+    this.width = width;
+    this.height = height;
+    this.list = new Dlist(width * height);
   }
 
   /**
@@ -73,7 +75,16 @@ public class RunLengthEncoding implements Iterable {
 
   public RunLengthEncoding(int width, int height, int[] red, int[] green,
                            int[] blue, int[] runLengths) {
-    // Your solution here.
+    this.width = width;
+    this.height = height;
+    list = new Dlist();
+    Pixel pixel = new Pixel();
+    for (int counter = 0; counter < runLengths.length; counter++) {
+      pixel.setRed(red[counter]);
+      pixel.setGreen(green[counter]);
+      pixel.setBlue(blue[counter]);
+      list.insertBack(pixel, runLengths[counter]);
+    }
   }
 
   /**
