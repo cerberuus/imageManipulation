@@ -36,8 +36,8 @@ public class RunIterator implements Iterator {
    *  Define any variables associated with a RunIterator object here.
    *  These variables MUST be private.
    */
-  private DListNode *current;
-
+  private DListNode current;
+  private int numberLeft;
 
 
   /**
@@ -54,8 +54,9 @@ public class RunIterator implements Iterator {
   // constructor that you want so that your RunLengthEncoding.iterator()
   // implementation can construct a RunIterator that points to the first run of
   // the encoding.
-  public RunIterator(DList list) {
-    this.current = list;
+  public RunIterator(DList list, int size) {
+    current = list;
+    numberLeft = size;
   }
 
   /**
@@ -66,7 +67,7 @@ public class RunIterator implements Iterator {
    */
   public boolean hasNext() {
     // Replace the following line with your solution.
-    return false;
+    return (numberLeft > 0);
   }
 
   /**
@@ -94,9 +95,18 @@ public class RunIterator implements Iterator {
     // Construct a new array of 4 ints, fill in its values, and return it.
     // Don't forget to advance the RunIterator's pointer so that the next
     // call to next() will return the subsequent run.
-
-    // Replace the following line with your solution.
-    return new int[4];
+    if (numberLeft <= 0) {
+      throw new NoSuchElementException();
+      return 0;
+    }
+    current = current.next;
+    size--;
+    int[] run = new int[4];
+    run[0] = current.getRed();
+    run[1] = current.getGreen();
+    run[2] = current.getBlue();
+    run[3] = current.getLength();
+    return run;
   }
 
   /**

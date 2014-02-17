@@ -33,4 +33,20 @@ public class DListNode {
   	this.length = length;
   }
 
+  public getRed() {
+    return pixel.getRed();
+  }
+
+  public getGreen() {
+    return pixel.getGreen();
+  }
+
+  public getBlue() {
+    return pixel.getBlue();
+  }
+
+  public getLength() {
+    return length;
+  }
+
 }
