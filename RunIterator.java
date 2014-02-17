@@ -36,7 +36,7 @@ public class RunIterator implements Iterator {
    *  Define any variables associated with a RunIterator object here.
    *  These variables MUST be private.
    */
-
+  private DListNode *current;
 
 
 
@@ -54,8 +54,8 @@ public class RunIterator implements Iterator {
   // constructor that you want so that your RunLengthEncoding.iterator()
   // implementation can construct a RunIterator that points to the first run of
   // the encoding.
-  RunIterator() {
-    // Your solution here.  You may add parameters to the method signature.
+  public RunIterator(DList list) {
+    this.current = list;
   }
 
   /**

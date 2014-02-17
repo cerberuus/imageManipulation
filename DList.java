@@ -8,7 +8,7 @@
 
 public class DList {
 
-	private DLIstNode head;
+	private DListNode head;
   private int size;
 
 	public DList() {

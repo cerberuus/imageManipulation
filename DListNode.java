@@ -13,7 +13,6 @@ public class DListNode {
    *  prev references the previous node in the DList.
    *  next references the next node in the DList.
    */
-
   private Pixel pixel;
   private int length;
 

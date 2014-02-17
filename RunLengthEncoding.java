@@ -80,9 +80,9 @@ public class RunLengthEncoding implements Iterable {
     list = new Dlist();
     Pixel pixel = new Pixel();
     for (int counter = 0; counter < runLengths.length; counter++) {
-      pixel.setRed(red[counter]);
-      pixel.setGreen(green[counter]);
-      pixel.setBlue(blue[counter]);
+      pixel.setRed((short)red[counter]);
+      pixel.setGreen((short)green[counter]);
+      pixel.setBlue((short)blue[counter]);
       list.insertBack(pixel, runLengths[counter]);
     }
   }
@@ -95,8 +95,7 @@ public class RunLengthEncoding implements Iterable {
    */
 
   public int getWidth() {
-    // Replace the following line with your solution.
-    return 1;
+    return width;
   }
 
   /**
@@ -106,8 +105,7 @@ public class RunLengthEncoding implements Iterable {
    *  @return the height of the image that this run-length encoding represents.
    */
   public int getHeight() {
-    // Replace the following line with your solution.
-    return 1;
+    return height;
   }
 
   /**
