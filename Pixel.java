@@ -8,43 +8,52 @@
 
 public class Pixel {
 
-    private short[] color = new short[3];
+    private short red;
+    private short green;
+    private short blue;
+    // private short[] color = new short[3];
 
 
     public Pixel(short red, short green, short blue) {
-        color[0] = red;
-        color[1] = green;
-        color[2] = blue;
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
+
+    public Pixel(Pixel original) {
+        this.red = original.red;
+        this.green = original.green;
+        this.blue = original.blue;
     }
 
     public Pixel() {
-        color[0] = 0;
-        color[1] = 0;
-        color[2] = 0;        
+        this.red = 0;
+        this.green = 0;
+        this.blue = 0;        
     }
 
     public short getRed() {
-        return color[0];
+        return red;
     }
 
     public short getGreen() {
-        return color[1];
+        return green;
     }
 
     public short getBlue() {
-        return color[2];
+        return blue;
     }
 
     public void setRed(short red) {
-        color[0] = red;
+        this.red = red;
     }
 
     public void setGreen(short green) {
-        color[1] = green;
+        this.green = green;
     }
 
     public void setBlue(short blue) {
-        color[2] = blue;
+        this.blue = blue;
     }
 
     public void averagePixel(Pixel[] pixelArray, int length) {

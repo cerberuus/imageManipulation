@@ -13,7 +13,7 @@
 public class Matrix {
 
 	/** 
-	 * matrix array stores the elements of the Matrix.
+	 *  matrix array stores the elements of the Matrix.
 	 */
 	private int[][] matrix;
 
@@ -24,7 +24,7 @@ public class Matrix {
 	}
 
 	/**
-	 * @param e## element (short) in the ## position of Matrix.
+	 *  @param e## element (short) in the ## position of Matrix.
 	 */
 	public Matrix(short e00, short e01, short e02,
 					short e10, short e11, short e12,
@@ -35,7 +35,7 @@ public class Matrix {
 	}
 
 	/**
-	 * @param e## element (int) in the ## position of Matrix.
+	 *  @param e## element (int) in the ## position of Matrix.
 	 */
 	public Matrix(int e00, int e01, int e02,
 					int e10, int e11, int e12,
@@ -46,7 +46,7 @@ public class Matrix {
 	}
 
 	/**
-	 * @param array an (int) array of matrix elements.
+	 *  @param array an (int) array of matrix elements.
 	 */
 	public Matrix(int[][] array) {
 		matrix =  new int[][] { { array[0][0], array[0][1], array[0][2] },
@@ -55,7 +55,7 @@ public class Matrix {
 	}
 
 	/**
-	 * @param array an (short) array of matrix elements.
+	 *  @param array an (short) array of matrix elements.
 	 */
 	public Matrix(short[][] array) {
 		matrix =  new int[][] { { (int)array[0][0], (int)array[0][1], (int)array[0][2] },
