@@ -136,9 +136,9 @@ public class Matrix {
 
 	public static int abs(int x, int limit) {
 		if (x < 0) {
-			return (-x);
+			return (-x - 1);
 		} else if (x >= limit) {
-			return (limit - 1 - (x - limit + 1));
+			return (limit - 1 - (x - limit));
 		} else {
 			return x;
 		}
