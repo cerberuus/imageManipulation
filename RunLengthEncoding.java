@@ -122,6 +122,21 @@ public class RunLengthEncoding implements Iterable {
   }
 
   /**
+   *  equal() returns if the two runs provided to it have the same RGB
+   *  intensities.
+   */
+  private boolean equal(int[] run1, int[] run2) {
+    if (run1[0] == run2[1]) {
+      if (run1[1] == run2[1]) {
+        if (run1[2] == run2[2]) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    *  toPixImage() converts a run-length encoding of an image into a PixImage
    *  object.
    *
@@ -188,9 +203,36 @@ public class RunLengthEncoding implements Iterable {
    *  all run lengths does not equal the number of pixels in the image.
    */
   public void check() {
-    // Your solution here.
+    int numPixels = 0;
+    int[] currentRun = new int[4];
+    int[] nextRun = new int[4];
+    RunIterator iterator = iterator();
+    if (iterator.hasNext()) {
+      currentRun = iterator.next();
+      numPixels += currentRun[3];
+      if (currentRun[3] < 1) {
+        println("Run length less than 1");
+        println(currentRun);
+      }
+    }
+    while (iterator.hasNext()) {
+      nextRun = iterator.next();
+      numPixels += nextRun[3];
+      if (nextRun[3] < 1) {
+        println("Run length less than 1");
+        println(nextRun);
+      }
+      if (equal(currentRun, nextRun)) {
+        println("Consecutive runs have the same RGB intensities:");
+        println(currentRun);
+        println(nextRun);
+      }
+      currentRun = nextRun;
+    }
+    if (numPixels != (width * height)) {
+      println("Wrong number of pixels: "+ (width * height) + ", " + numPixels);
+    }
   }
-
 
   /**
    *  The following method is required for Part IV.
