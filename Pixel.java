@@ -8,76 +8,87 @@
 
 public class Pixel {
 
-    private short red;
-    private short green;
-    private short blue;
-    // private short[] color = new short[3];
+  private short red;
+  private short green;
+  private short blue;
+  // private short[] color = new short[3];
 
 
-    public Pixel(short red, short green, short blue) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-    }
+  public Pixel(short red, short green, short blue) {
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+  }
 
-    public Pixel(Pixel original) {
-        this.red = original.red;
-        this.green = original.green;
-        this.blue = original.blue;
-    }
+  public Pixel(Pixel original) {
+    this.red = original.red;
+    this.green = original.green;
+    this.blue = original.blue;
+  }
 
-    public Pixel() {
-        this.red = 0;
-        this.green = 0;
-        this.blue = 0;        
-    }
+  public Pixel() {
+    this.red = 0;
+    this.green = 0;
+    this.blue = 0;        
+  }
 
-    public short getRed() {
-        return red;
-    }
+  public short getRed() {
+      return red;
+  }
 
-    public short getGreen() {
-        return green;
-    }
+  public short getGreen() {
+    return green;
+  }
 
-    public short getBlue() {
-        return blue;
-    }
+  public short getBlue() {
+    return blue;
+  }
 
-    public void setRed(short red) {
-        this.red = red;
-    }
+  public void setRed(short red) {
+    this.red = red;
+  }
 
-    public void setGreen(short green) {
-        this.green = green;
-    }
+  public void setGreen(short green) {
+    this.green = green;
+  }
 
-    public void setBlue(short blue) {
-        this.blue = blue;
-    }
+  public void setBlue(short blue) {
+    this.blue = blue;
+  }
 
-    public void averagePixel(Pixel[] pixelArray, int length) {
-        int average = 0, counter;
-        Pixel pixel = new Pixel();
-        // Get red color
-        for (counter = 0, average = 0; counter < length; counter++) {
-            average += pixelArray[counter].getRed();
+  public boolean equals(Pixel other) {
+    if (red == other.red) {
+      if (green == other.green) {
+        if (blue == pther.blue) {
+          return true;
         }
-        average /= length;
-        this.setRed((short) average);
-        // Get green color
-        for (counter = 0, average = 0; counter < length; counter++) {
-            average += pixelArray[counter].getGreen();
-        }
-        average /= length;
-        this.setGreen((short) average);
-        // Get blue color
-        for (counter = 0, average = 0; counter < length; counter++) {
-            average += pixelArray[counter].getBlue();
-        }
-        average /= length;
-        this.setBlue((short) average);
+      }
     }
+    return false;
+  }
+
+  public void averagePixel(Pixel[] pixelArray, int length) {
+      int average = 0, counter;
+      Pixel pixel = new Pixel();
+      // Get red color
+      for (counter = 0, average = 0; counter < length; counter++) {
+          average += pixelArray[counter].getRed();
+      }
+      average /= length;
+      this.setRed((short) average);
+      // Get green color
+      for (counter = 0, average = 0; counter < length; counter++) {
+          average += pixelArray[counter].getGreen();
+      }
+      average /= length;
+      this.setGreen((short) average);
+      // Get blue color
+      for (counter = 0, average = 0; counter < length; counter++) {
+          average += pixelArray[counter].getBlue();
+      }
+      average /= length;
+      this.setBlue((short) average);
+  }
 
 
 }

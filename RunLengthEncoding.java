@@ -144,7 +144,7 @@ public class RunLengthEncoding implements Iterable {
    */
   public PixImage toPixImage() {
     // Replace the following line with your solution.
-    PixImage pixelImage = new PixImage(width, height);
+    PixImage image = new PixImage(width, height);
     RunIterator iterator = iterator();
     int x = 0, y = 0;
     short red, green, blue;
@@ -156,11 +156,11 @@ public class RunLengthEncoding implements Iterable {
       blue = (short) nextRun[2];
       for (int counter = 0; (y < height) && (counter < nextRun[3]); counter++, y++) {
         for ( ; (x < width) && (counter < nextRun[3]); counter++, x++) {
-          pixelImage.setPixel(x, y, red, green, blue);
+          image.setPixel(x, y, red, green, blue);
         }
       }
     }
-    return pixelImage;
+    return image;
   }
 
   /**
@@ -192,8 +192,23 @@ public class RunLengthEncoding implements Iterable {
    *  @param image is the PixImage to run-length encode.
    */
   public RunLengthEncoding(PixImage image) {
-    // Your solution here, but you should probably leave the following line
-    // at the end.
+    this.width = image.getWidth();
+    this.height = image.getHeight();
+    short red = image.getRed(0, 0);
+    short green = image.getGreen(0, 0);
+    short blue = image.getBlue(0, 0);
+    Pixel currentPixel = new Pixel(red, green, blue);
+    int x = 1, y = 0;
+    int[] currentRun = new int[4];
+    for ( ; y < height; y++) {
+      for ( ; x < width; x++) {
+        short red = image.getRed(x, y);
+        short green = image.getGreen(x, y);
+        short blue = image.getBlue(x, y);
+        Pixel nextPixel = new Pixel(red, green, blue);
+
+      }
+    }
     check();
   }
 
@@ -211,26 +226,26 @@ public class RunLengthEncoding implements Iterable {
       currentRun = iterator.next();
       numPixels += currentRun[3];
       if (currentRun[3] < 1) {
-        println("Run length less than 1");
-        println(currentRun);
+        System.out.println("Run length less than 1");
+        System.out.println(currentRun);
       }
     }
     while (iterator.hasNext()) {
       nextRun = iterator.next();
       numPixels += nextRun[3];
       if (nextRun[3] < 1) {
-        println("Run length less than 1");
-        println(nextRun);
+        System.out.println("Run length less than 1");
+        System.out.println(nextRun);
       }
       if (equal(currentRun, nextRun)) {
-        println("Consecutive runs have the same RGB intensities:");
-        println(currentRun);
-        println(nextRun);
+        System.out.println("Consecutive runs have the same RGB intensities:");
+        System.out.println(currentRun);
+        System.out.println(nextRun);
       }
       currentRun = nextRun;
     }
     if (numPixels != (width * height)) {
-      println("Wrong number of pixels: "+ (width * height) + ", " + numPixels);
+      System.out.println("Wrong number of pixels: "+ (width * height) + ", " + numPixels);
     }
   }
 
