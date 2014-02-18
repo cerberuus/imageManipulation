@@ -140,12 +140,12 @@ public class PixImage {
     String str = new String();
     short red, green, blue;
     str = "";
-    for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
         str += "|";
         str += String.valueOf(image[x][y].getRed()) + ",";
         str += String.valueOf(image[x][y].getGreen()) + ",";
-        str += String.valueOf(image[x][y].getBlue()) + "|";
+        str += String.valueOf(image[x][y].getBlue());
       }
       str += "|\n";
     }

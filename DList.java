@@ -22,7 +22,11 @@ public class DList {
 		this();
 		Pixel pixel = new Pixel();
 		this.insertBack(pixel, length);
-	} 
+	}
+
+	int getSize() {
+		return size;
+	}
 
 	void insertBack(Pixel pixel, int length) {
 		head.prev.next = new DListNode(pixel, length);

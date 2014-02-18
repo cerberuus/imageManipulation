@@ -54,9 +54,9 @@ public class RunIterator implements Iterator {
   // constructor that you want so that your RunLengthEncoding.iterator()
   // implementation can construct a RunIterator that points to the first run of
   // the encoding.
-  public RunIterator(DList list, int size) {
+  public RunIterator(DList list) {
     current = list.getHead();
-    numberLeft = size;
+    numberLeft = list.getSize();
   }
 
   /**

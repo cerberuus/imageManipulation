@@ -59,7 +59,7 @@ public class Pixel {
   public boolean equals(Pixel other) {
     if (red == other.red) {
       if (green == other.green) {
-        if (blue == pther.blue) {
+        if (blue == other.blue) {
           return true;
         }
       }
