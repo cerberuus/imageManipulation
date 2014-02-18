@@ -55,7 +55,7 @@ public class RunIterator implements Iterator {
   // implementation can construct a RunIterator that points to the first run of
   // the encoding.
   public RunIterator(DList list, int size) {
-    current = list;
+    current = list.getHead();
     numberLeft = size;
   }
 
@@ -97,10 +97,9 @@ public class RunIterator implements Iterator {
     // call to next() will return the subsequent run.
     if (numberLeft <= 0) {
       throw new NoSuchElementException();
-      return 0;
     }
     current = current.next;
-    size--;
+    numberLeft--;
     int[] run = new int[4];
     run[0] = current.getRed();
     run[1] = current.getGreen();

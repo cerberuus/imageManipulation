@@ -15,6 +15,8 @@ public class DListNode {
    */
   private Pixel pixel;
   private int length;
+  public DListNode prev;
+  public DListNode next;
 
   /**
    *  @param pixel the RGB intensities of the current run.
@@ -23,6 +25,8 @@ public class DListNode {
   public DListNode(Pixel pixel, int length) {
   	this.pixel = new Pixel(pixel);
   	this.length = length;
+    prev = null;
+    next = null;
   }
 
   /**
@@ -31,22 +35,32 @@ public class DListNode {
   public DListNode(int length) {
   	this.pixel = new Pixel();
   	this.length = length;
+    prev = null;
+    next = null;
   }
 
-  public getRed() {
+  public short getRed() {
     return pixel.getRed();
   }
 
-  public getGreen() {
+  public short getGreen() {
     return pixel.getGreen();
   }
 
-  public getBlue() {
+  public short getBlue() {
     return pixel.getBlue();
   }
 
-  public getLength() {
+  public int getLength() {
     return length;
+  }
+
+  public void setPrev(DListNode prev) {
+    this.prev = prev;
+  }
+
+  public void setNext(DListNode next) {
+    this.next = next;
   }
 
 }

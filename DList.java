@@ -15,7 +15,7 @@ public class DList {
 		head = new DListNode(0);
 		head.next = head;
 		head.prev = head;
-		size = 0
+		size = 0;
 	}
 
 	public DList(int length) {
@@ -40,6 +40,9 @@ public class DList {
 		size++;
 	}
 
+	DListNode getHead() {
+		return head;
+	}
 
 
 }

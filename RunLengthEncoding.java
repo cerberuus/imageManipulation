@@ -29,7 +29,7 @@ public class RunLengthEncoding implements Iterable {
    *  Define any variables associated with a RunLengthEncoding object here.
    *  These variables MUST be private.
    */
-  private Dlist list;
+  private DList list;
   private int width;
   private int height;
 
@@ -49,7 +49,7 @@ public class RunLengthEncoding implements Iterable {
   public RunLengthEncoding(int width, int height) {
     this.width = width;
     this.height = height;
-    this.list = new Dlist(width * height);
+    this.list = new DList(width * height);
   }
 
   /**
@@ -77,7 +77,7 @@ public class RunLengthEncoding implements Iterable {
                            int[] blue, int[] runLengths) {
     this.width = width;
     this.height = height;
-    list = new Dlist();
+    list = new DList();
     Pixel pixel = new Pixel();
     for (int counter = 0; counter < runLengths.length; counter++) {
       pixel.setRed((short)red[counter]);
@@ -117,9 +117,8 @@ public class RunLengthEncoding implements Iterable {
    */
   public RunIterator iterator() {
     // Replace the following line with your solution.
-    return null;
-    // You'll want to construct a new RunIterator, but first you'll need to
-    // write a constructor in the RunIterator class.
+    RunIterator iterator = new RunIterator(list, width * height);
+    return iterator;
   }
 
   /**
@@ -130,7 +129,23 @@ public class RunLengthEncoding implements Iterable {
    */
   public PixImage toPixImage() {
     // Replace the following line with your solution.
-    return new PixImage(1, 1);
+    PixImage pixelImage = new PixImage(width, height);
+    RunIterator iterator = iterator();
+    int x = 0, y = 0;
+    short red, green, blue;
+    int[] nextRun = new int[4];
+    while (iterator.hasNext()) {
+      nextRun = iterator.next();
+      red = (short) nextRun[0];
+      green = (short) nextRun[1];
+      blue = (short) nextRun[2];
+      for (int counter = 0; (y < height) && (counter < nextRun[3]); counter++, y++) {
+        for ( ; (x < width) && (counter < nextRun[3]); counter++, x++) {
+          pixelImage.setPixel(x, y, red, green, blue);
+        }
+      }
+    }
+    return pixelImage;
   }
 
   /**
