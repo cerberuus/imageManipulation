@@ -44,20 +44,26 @@ public class DList {
 		size++;
 	}
 
-	void insertBefore(DListNode node, Pixel pixel, int length) {
+	public void insertBefore(DListNode node, Pixel pixel, int length) {
 
 	}
 
-	void insertAfter(DListNode node, Pixel pixel, int length) {
-
+	public void insertAfter(RunIterator iterator, Pixel pixel, int length) {
+		DListNode node = iterator.currNode();
+		node.next.prev = new DListNode(pixel, length);
+		node.next.prev.next = node.next;
+		node.next = node.next.prev;
+		node.next.prev = node;
+		size++;
 	}
 
 	void editNode(DListNode node, Pixel pixel, int length) {
 		node.edit(pixel, length);
 	}
 
-	void editNode(DListNode node, int length) {
-		node.edit(length);
+	void editCurrentNode(RunIterator iterator, int length) {
+		DListNode currNode = iterator.currNode();
+		currNode.edit(length);
 	}
 
 	DListNode getHead() {

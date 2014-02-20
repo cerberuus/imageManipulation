@@ -319,9 +319,8 @@ public class RunLengthEncoding implements Iterable {
       return;
     }
     if (pixelIndex == pixelCounter) {
-      DListNode runNode = iterator.currNode();
-      runNode.edit(run[0] - 1);
-
+      list.editCurrentNode(iterator, run[0] - 1);
+      list.insertAfter(iterator, pixel, 1);
     } else if (pixelIndex == (pixelCounter - run[0] + 1)) {
 
     } else {
