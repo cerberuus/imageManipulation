@@ -44,6 +44,14 @@ public class Pixel {
     return blue;
   }
 
+  public String toString() {
+    String str = new String();
+    str += "[R:" + String.valueOf(red) + ",";
+    str += " G:" + String.valueOf(green) + ",";
+    str += " B:" + String.valueOf(blue) + "]\n";
+    return str;
+  }
+
   public void setRed(short red) {
     this.red = red;
   }

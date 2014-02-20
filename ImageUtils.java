@@ -40,7 +40,7 @@ public class ImageUtils {
 
   /**
    *  buffer2PixImage() converts a BufferedImage to a PixImage.
-   *  @param image the image to convert.
+   *  @param bImage the image to convert.
    *  @return a PixImage with the same pixels as the BufferedImage.
    */
   private static PixImage buffer2PixImage(BufferedImage bImage) {
@@ -57,10 +57,10 @@ public class ImageUtils {
 
   /**
    *  pixImage2buffer() converts a PixImage to a BufferedImage.
-   *  @param image the image to convert.
+   *  @param pImage the image to convert.
    *  @return a BufferedImage with the same pixels as the PixImage.
    */
-  private static BufferedImage pixImage2buffer(PixImage pImage) {
+  static BufferedImage pixImage2buffer(PixImage pImage) {
     BufferedImage bImage = new BufferedImage(pImage.getWidth(),
                                              pImage.getHeight(),
                                              BufferedImage.TYPE_INT_ARGB);
@@ -114,7 +114,7 @@ public class ImageUtils {
 
   /**
    *  writeTIFF() writes a PixImage to a specified file in TIFF format.
-   *  @param rle the input PixImage.
+   *  @param image the input PixImage.
    *  @param filename the output filename.
    */
   public static void writeTIFF(PixImage image, String filename) {

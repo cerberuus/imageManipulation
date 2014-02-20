@@ -38,6 +38,7 @@ public class RunIterator implements Iterator {
    */
   private DListNode current;
   private int numberLeft;
+  private int total;
 
 
   /**
@@ -56,7 +57,7 @@ public class RunIterator implements Iterator {
   // the encoding.
   public RunIterator(DList list) {
     current = list.getHead();
-    numberLeft = list.getSize();
+    numberLeft = total = list.getSize();
   }
 
   /**
@@ -66,7 +67,6 @@ public class RunIterator implements Iterator {
    *  @return true if the iterator has more elements.
    */
   public boolean hasNext() {
-    // Replace the following line with your solution.
     return (numberLeft > 0);
   }
 
@@ -93,18 +93,47 @@ public class RunIterator implements Iterator {
    */
   public int[] next() {
     // Construct a new array of 4 ints, fill in its values, and return it.
-    // Don't forget to advance the RunIterator's pointer so that the next
-    // call to next() will return the subsequent run.
     if (numberLeft <= 0) {
       throw new NoSuchElementException();
     }
     current = current.next;
     numberLeft--;
     int[] run = new int[4];
-    run[0] = current.getRed();
-    run[1] = current.getGreen();
-    run[2] = current.getBlue();
-    run[3] = current.getLength();
+    run[0] = current.getLength();
+    run[1] = current.getRed();
+    run[2] = current.getGreen();
+    run[3] = current.getBlue();
+    return run;
+  }
+
+  public int[] curr() {
+    int[] run = new int[4];
+    run[0] = current.getLength();
+    run[1] = current.getRed();
+    run[2] = current.getGreen();
+    run[3] = current.getBlue();
+    return run;
+  }
+
+  public DListNode currNode() {
+    return current;
+  }
+
+  public boolean hasPrev() {
+    return (numberLeft < total);
+  }
+
+  public int[] prev() {
+    if (numberLeft >= total) {
+      throw new NoSuchElementException();
+    }
+    current = current.prev;
+    numberLeft++;
+    int[] run = new int[4];
+    run[0] = current.getLength();
+    run[1] = current.getRed();
+    run[2] = current.getGreen();
+    run[3] = current.getBlue();
     return run;
   }
 

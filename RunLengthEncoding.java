@@ -83,6 +83,7 @@ public class RunLengthEncoding implements Iterable {
       pixel.setRed((short)red[counter]);
       pixel.setGreen((short)green[counter]);
       pixel.setBlue((short)blue[counter]);
+      System.out.print(pixel);
       list.insertBack(pixel, runLengths[counter]);
     }
   }
@@ -126,9 +127,9 @@ public class RunLengthEncoding implements Iterable {
    *  intensities.
    */
   private boolean equal(int[] run1, int[] run2) {
-    if (run1[0] == run2[1]) {
-      if (run1[1] == run2[1]) {
-        if (run1[2] == run2[2]) {
+    if (run1[1] == run2[1]) {
+      if (run1[2] == run2[2]) {
+        if (run1[3] == run2[3]) {
           return true;
         }
       }
@@ -151,10 +152,10 @@ public class RunLengthEncoding implements Iterable {
     int[] nextRun = new int[4];
     while (iterator.hasNext()) {
       nextRun = iterator.next();
-      red = (short) nextRun[0];
-      green = (short) nextRun[1];
-      blue = (short) nextRun[2];
-      for (counter = 0; counter < nextRun[3]; counter++) {
+      red = (short) nextRun[1];
+      green = (short) nextRun[2];
+      blue = (short) nextRun[3];
+      for (counter = 0; counter < nextRun[0]; counter++) {
         image.setPixel(x, y, red, green, blue);
         if (x == (width-1)) {
           x = 0;
@@ -176,8 +177,8 @@ public class RunLengthEncoding implements Iterable {
 
   public String runToString(int[] run) {
     String runString = new String();
-    runString += "(" + run[0] + "," + run[1] + "," + run[2] + ")";
-    runString += "x" + run[3];
+    runString += "(" + run[1] + "," + run[2] + "," + run[3] + ")";
+    runString += "x" + run[0];
     return runString;
   }
 
@@ -258,16 +259,16 @@ public class RunLengthEncoding implements Iterable {
     RunIterator iterator = iterator();
     if (iterator.hasNext()) {
       currentRun = iterator.next();
-      numPixels += currentRun[3];
-      if (currentRun[3] < 1) {
+      numPixels += currentRun[0];
+      if (currentRun[0] < 1) {
         System.out.println("Run length less than 1");
         System.out.println(currentRun);
       }
     }
     while (iterator.hasNext()) {
       nextRun = iterator.next();
-      numPixels += nextRun[3];
-      if (nextRun[3] < 1) {
+      numPixels += nextRun[0];
+      if (nextRun[0] < 1) {
         System.out.println("Run length less than 1");
         System.out.println(nextRun);
       }
@@ -301,8 +302,36 @@ public class RunLengthEncoding implements Iterable {
    *  @param blue the new blue intensity to store at coordinate (x, y).
    */
   public void setPixel(int x, int y, short red, short green, short blue) {
-    // Your solution here, but you should probably leave the following line
-    //   at the end.
+    int pixelIndex = x + y*width, pixelCounter = -1;
+    RunIterator iterator = iterator();
+    Pixel pixel = new Pixel(red, green, blue);
+    int[] run = new int[4];
+    int[] tentativeRun = new int[] {1, red, green, blue};
+    while (pixelIndex > pixelCounter) {
+      if (iterator.hasNext()) {
+        run = iterator.next();
+        pixelCounter += run[0];
+      } else {
+        break;
+      }
+    }
+    if (equal(run, tentativeRun)) {
+      return;
+    }
+    if (pixelIndex == pixelCounter) {
+      DListNode runNode = iterator.currNode();
+      runNode.edit(run[0] - 1);
+
+    } else if (pixelIndex == (pixelCounter - run[0] + 1)) {
+
+    } else {
+
+    }
+      
+
+
+    
+
     check();
   }
 

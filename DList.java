@@ -44,6 +44,22 @@ public class DList {
 		size++;
 	}
 
+	void insertBefore(DListNode node, Pixel pixel, int length) {
+
+	}
+
+	void insertAfter(DListNode node, Pixel pixel, int length) {
+
+	}
+
+	void editNode(DListNode node, Pixel pixel, int length) {
+		node.edit(pixel, length);
+	}
+
+	void editNode(DListNode node, int length) {
+		node.edit(length);
+	}
+
 	DListNode getHead() {
 		return head;
 	}

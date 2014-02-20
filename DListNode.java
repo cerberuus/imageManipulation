@@ -55,6 +55,15 @@ public class DListNode {
     return length;
   }
 
+  public void edit(Pixel pixel, int length) {
+    this.pixel = pixel;
+    this.length = length;
+  }
+
+  public void edit(int length) {
+    this.length = length;
+  }
+
   public void setPrev(DListNode prev) {
     this.prev = prev;
   }
