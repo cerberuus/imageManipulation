@@ -183,14 +183,13 @@ public class PixImage {
    */
   public PixImage boxBlur(int numIterations) {
     // Replace the following line with your solution.
-    if (numIterations <= 0) return this;
-
+    if (numIterations <= 0) {
+      return this;
+    }
     PixImage newImage = new PixImage(this);
-    ///*
     Matrix blurMatrix = Matrix.blurMatrix();
     short red, green, blue;
     int count;
-
     for (int counter = 0; counter < numIterations; counter++) {
       PixImage blurredImage = new PixImage(this.width, this.height); 
       for (int x = 0; x < width; x++) {
@@ -249,7 +248,6 @@ public class PixImage {
    * Whiter pixels represent stronger edges.
    */
   public PixImage sobelEdges() {
-    // Replace the following line with your solution.
     PixImage sobelledImage = new PixImage(width, height);
     Matrix gradxMatrix = Matrix.gradientxMatrix();
     Matrix gradyMatrix = Matrix.gradientyMatrix();
@@ -270,8 +268,6 @@ public class PixImage {
       }
     }
     return sobelledImage;
-    // Don't forget to use the method mag2gray() above to convert energies to
-    // pixel intensities.
   }
 
 
@@ -309,14 +305,12 @@ public class PixImage {
     int width = pixels.length;
     int height = pixels[0].length;
     PixImage image = new PixImage(width, height);
-
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         image.setPixel(x, y, (short) pixels[x][y], (short) pixels[x][y],
                        (short) pixels[x][y]);
       }
     }
-
     return image;
   }
 
@@ -330,12 +324,10 @@ public class PixImage {
   public boolean equals(PixImage image) {
     int width = getWidth();
     int height = getHeight();
-
     if (image == null ||
         width != image.getWidth() || height != image.getHeight()) {
       return false;
     }
-
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
         if (! (getRed(x, y) == image.getRed(x, y) &&

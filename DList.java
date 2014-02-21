@@ -12,7 +12,7 @@ public class DList {
   private int size;
 
 	public DList() {
-		head = new DListNode(0);
+		head = new DListNode(-1);
 		head.next = head;
 		head.prev = head;
 		size = 0;
@@ -24,11 +24,11 @@ public class DList {
 		this.insertBack(pixel, length);
 	}
 
-	int getSize() {
+	public int getSize() {
 		return size;
 	}
 
-	void insertBack(Pixel pixel, int length) {
+	public void insertBack(Pixel pixel, int length) {
 		head.prev.next = new DListNode(pixel, length);
 		head.prev.next.prev = head.prev;
 		head.prev = head.prev.next;
@@ -36,7 +36,7 @@ public class DList {
 		size++;
 	}
 
-	void insertFront(Pixel pixel, int length) {
+	public void insertFront(Pixel pixel, int length) {
 		head.next.prev = new DListNode(pixel, length);
 		head.next.prev.next = head.next;
 		head.next = head.next.prev;
@@ -44,8 +44,13 @@ public class DList {
 		size++;
 	}
 
-	public void insertBefore(DListNode node, Pixel pixel, int length) {
-
+	public void insertBefore(RunIterator iterator, Pixel pixel, int length) {
+		DListNode node = iterator.currNode();
+		node.prev.next = new DListNode(pixel, length);
+		node.prev.next.prev = node.prev;
+		node.prev = node.prev.next;
+		node.prev.next = node;
+		size++;
 	}
 
 	public void insertAfter(RunIterator iterator, Pixel pixel, int length) {
@@ -57,18 +62,37 @@ public class DList {
 		size++;
 	}
 
-	void editNode(DListNode node, Pixel pixel, int length) {
-		node.edit(pixel, length);
+	private void remove(DListNode node) {
+		DListNode next = node.next;
+		next.prev = node.prev;
+		node.prev.next = next;
+		size --;
 	}
 
-	void editCurrentNode(RunIterator iterator, int length) {
+	public void editCurrentNode(RunIterator iterator, int length) {
 		DListNode currNode = iterator.currNode();
 		currNode.edit(length);
 	}
 
-	DListNode getHead() {
+	public DListNode getHead() {
 		return head;
 	}
 
+	public void clean() {
+		for (DListNode node = head.next; node.getLength() != -1; node = node.next) {
+			if (node.getLength() == 0) {
+				remove(node);
+			}
+		}
+		DListNode current = head.next;		
+		for (DListNode next = current.next; next.getLength() != -1; next = next.next) {
+			if (current.equals(next)) {
+				current.edit(current.getLength() + next.getLength());
+				remove(next);
+			} else {
+				current = next;
+			}
+		}
+	}
 
 }

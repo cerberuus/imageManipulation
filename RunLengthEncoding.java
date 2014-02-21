@@ -83,7 +83,6 @@ public class RunLengthEncoding implements Iterable {
       pixel.setRed((short)red[counter]);
       pixel.setGreen((short)green[counter]);
       pixel.setBlue((short)blue[counter]);
-      System.out.print(pixel);
       list.insertBack(pixel, runLengths[counter]);
     }
   }
@@ -217,7 +216,6 @@ public class RunLengthEncoding implements Iterable {
    *  @param image is the PixImage to run-length encode.
    */
   public RunLengthEncoding(PixImage image) {
-    System.out.println("RunLengthEncoding PixImage");
     width = image.getWidth();
     height = image.getHeight();
     list = new DList();
@@ -252,7 +250,6 @@ public class RunLengthEncoding implements Iterable {
    *  all run lengths does not equal the number of pixels in the image.
    */
   public void check() {
-    System.out.println(this);
     int numPixels = 0;
     int[] currentRun = new int[4];
     int[] nextRun = new int[4];
@@ -261,26 +258,26 @@ public class RunLengthEncoding implements Iterable {
       currentRun = iterator.next();
       numPixels += currentRun[0];
       if (currentRun[0] < 1) {
-        System.out.println("Run length less than 1");
-        System.out.println(currentRun);
+        System.out.println("****Run length less than 1");
+        System.out.println(runToString(currentRun));
       }
     }
     while (iterator.hasNext()) {
       nextRun = iterator.next();
       numPixels += nextRun[0];
       if (nextRun[0] < 1) {
-        System.out.println("Run length less than 1");
-        System.out.println(nextRun);
+        System.out.println("****Run length less than 1");
+        System.out.println(runToString(nextRun));
       }
       if (equal(currentRun, nextRun)) {
-        System.out.println("Consecutive runs have the same RGB intensities:");
-        System.out.println(currentRun);
-        System.out.println(nextRun);
+        System.out.println("****Consecutive runs have the same RGB intensities:");
+        System.out.println(runToString(currentRun));
+        System.out.println(runToString(nextRun));
       }
       currentRun = nextRun;
     }
     if (numPixels != (width * height)) {
-      System.out.println("Wrong number of pixels: "+ (width * height) + ", " + numPixels);
+      System.out.println("****Wrong number of pixels: "+ (width * height) + ", " + numPixels);
     }
   }
 
@@ -306,7 +303,6 @@ public class RunLengthEncoding implements Iterable {
     RunIterator iterator = iterator();
     Pixel pixel = new Pixel(red, green, blue);
     int[] run = new int[4];
-    int[] tentativeRun = new int[] {1, red, green, blue};
     while (pixelIndex > pixelCounter) {
       if (iterator.hasNext()) {
         run = iterator.next();
@@ -315,21 +311,21 @@ public class RunLengthEncoding implements Iterable {
         break;
       }
     }
-    if (equal(run, tentativeRun)) {
-      return;
-    }
     if (pixelIndex == pixelCounter) {
       list.editCurrentNode(iterator, run[0] - 1);
       list.insertAfter(iterator, pixel, 1);
+      list.clean();
     } else if (pixelIndex == (pixelCounter - run[0] + 1)) {
-
+      list.editCurrentNode(iterator, run[0] - 1);
+      list.insertBefore(iterator, pixel, 1);
+      list.clean();
     } else {
-
-    }
-      
-
-
-    
+      Pixel oldPixel = new Pixel((short) run[1], (short) run[2], (short) run[3]);
+      list.editCurrentNode(iterator, run[0] - pixelCounter + pixelIndex - 1);
+      list.insertAfter(iterator, oldPixel, pixelCounter - pixelIndex);
+      list.insertAfter(iterator, pixel, 1);
+      list.clean();
+    }    
 
     check();
   }
@@ -404,9 +400,6 @@ public class RunLengthEncoding implements Iterable {
     // Be forwarned that when you write arrays directly in Java as below,
     // each "row" of text is a column of your image--the numbers get
     // transposed.
-    System.out.println();
-    System.out.println();
-    System.out.println();
     PixImage image1 = array2PixImage(new int[][] { { 0, 3, 6 },
                                                    { 1, 4, 7 },
                                                    { 2, 5, 8 } });
@@ -571,6 +564,7 @@ public class RunLengthEncoding implements Iterable {
            "Setting RLE4[1][0] = 0 fails.");
 
     System.out.println("Testing setPixel() on a 3x2 encoding.");
+
     setAndCheckRLE(rle4, 1, 0, 1);
     image4.setPixel(1, 0, (short) 1, (short) 1, (short) 1);
     doTest(rle4.toPixImage().equals(image4),

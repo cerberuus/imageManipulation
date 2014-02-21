@@ -11,7 +11,6 @@ public class Pixel {
   private short red;
   private short green;
   private short blue;
-  // private short[] color = new short[3];
 
 
   public Pixel(short red, short green, short blue) {

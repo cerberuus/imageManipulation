@@ -72,4 +72,24 @@ public class DListNode {
     this.next = next;
   }
 
+  public String toString() {
+    String runString = new String();
+    runString += "(" + pixel.getRed();
+    runString += "," + pixel.getGreen();
+    runString += "," + pixel.getBlue() + ")";
+    runString += "x" + length;
+    return runString;
+  }
+
+  public boolean equals(DListNode that) {
+    if (this.getRed() == that.getRed()) {
+      if (this.getGreen() == that.getGreen()) {
+        if (this.getBlue() == that.getBlue()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
